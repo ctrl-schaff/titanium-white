@@ -25,9 +25,7 @@ classifiers = [
 ]
 dependencies = [
     "flake8>=4.0.1",
-    "html2text",
     "loguru>=0.6.0",
-    "pandas",
     "pylint>=2.15.0",
     "pytest>=6.2.5",
     "requests"
@@ -54,7 +52,6 @@ addopts = [
     "--strict-markers",
     "--color=yes",
     "--code-highlight=yes",
-    "--debug"
 ]
 
 # Path
