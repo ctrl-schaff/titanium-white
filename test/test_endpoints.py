@@ -25,7 +25,7 @@ def test_people_endpoint_response(
         endpoint=people_endpoint,
         api_key=mock_courtlistener_api_key,
         headers={},
-        endpoint_parameters=endpoint_parameters,
+        parameters=endpoint_parameters,
     )
 
     responses.add(responses.GET, people_endpoint, json=people_endpoint_response)

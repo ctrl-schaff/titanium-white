@@ -26,7 +26,8 @@ def load_response(response_path: Union[str, Path]) -> dict:
     response data from the endpoint
     """
     try:
-        response_obj = json.loads(str(response_path))
+        with open(str(response_path), "r", encoding="utf-8") as json_handle:
+            response_obj = json.load(json_handle)
     except json.decoder.JSONDecodeError as json_decode_err:
         json_err_msg = f"Unable to load {str(response_path)} internally as JSON object"
         logger.error(json_err_msg)
@@ -43,6 +44,6 @@ def people_endpoint_response() -> dict:
     Loads the response produced by hitting the following endpoitn
     https://www.courtlistener.com/api/rest/v3/people/?name_first=Cynthia&name_last=Freeland
     """
-    endpoint_path = Path("./data/test_people_endpoint_response.json").absolute()
+    endpoint_path = Path("./test/data/test_people_endpoint_response.json").absolute()
     endpoint_response = load_response(endpoint_path)
     return endpoint_response
