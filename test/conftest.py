@@ -7,6 +7,9 @@ import os
 import pytest
 
 
+pytest_plugins = ["test.fixtures"]
+
+
 @pytest.fixture(scope="session", autouse=True)
 def mock_courtlistener_api_key() -> None:
     """

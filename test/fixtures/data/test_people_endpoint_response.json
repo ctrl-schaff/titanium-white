@@ -1,0 +1,155 @@
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "resource_uri": "https://www.courtlistener.com/api/rest/v3/people/14155/",
+            "id": 14155,
+            "race": [
+                "w"
+            ],
+            "sources": [
+                {
+                    "resource_uri": "https://www.courtlistener.com/api/rest/v3/sources/8350/",
+                    "id": 8350,
+                    "person": "https://www.courtlistener.com/api/rest/v3/people/14155/",
+                    "date_created": "2022-02-23T09:35:40.835771-08:00",
+                    "date_modified": "2022-02-23T09:35:40.835794-08:00",
+                    "url": "https://www.forster-long.com/americanbench",
+                    "date_accessed": "2022-02-23",
+                    "notes": "American Bench, 2021 ed."
+                },
+                {
+                    "resource_uri": "https://www.courtlistener.com/api/rest/v3/sources/8351/",
+                    "id": 8351,
+                    "person": "https://www.courtlistener.com/api/rest/v3/people/14155/",
+                    "date_created": "2022-02-23T09:35:40.842873-08:00",
+                    "date_modified": "2022-02-23T09:35:40.842897-08:00",
+                    "url": "https://ballotpedia.org/Cynthia_Freeland",
+                    "date_accessed": "2022-02-23",
+                    "notes": ""
+                },
+                {
+                    "resource_uri": "https://www.courtlistener.com/api/rest/v3/sources/8352/",
+                    "id": 8352,
+                    "person": "https://www.courtlistener.com/api/rest/v3/people/14155/",
+                    "date_created": "2022-02-23T09:35:40.847037-08:00",
+                    "date_modified": "2022-02-23T09:35:40.847061-08:00",
+                    "url": "https://www.martindale.com/attorney/cynthia-anne-freeland-214908/",
+                    "date_accessed": "2022-02-23",
+                    "notes": ""
+                },
+                {
+                    "resource_uri": "https://www.courtlistener.com/api/rest/v3/sources/8353/",
+                    "id": 8353,
+                    "person": "https://www.courtlistener.com/api/rest/v3/people/14155/",
+                    "date_created": "2022-02-23T09:35:40.856480-08:00",
+                    "date_modified": "2022-02-23T09:35:40.856504-08:00",
+                    "url": "https://www.courtlistener.com",
+                    "date_accessed": "2022-02-23",
+                    "notes": "Data updated by: catmom"
+                }
+            ],
+            "aba_ratings": [],
+            "educations": [
+                {
+                    "resource_uri": "https://www.courtlistener.com/api/rest/v3/educations/7905/",
+                    "id": 7905,
+                    "school": {
+                        "resource_uri": "https://www.courtlistener.com/api/rest/v3/schools/2832/",
+                        "id": 2832,
+                        "is_alias_of": null,
+                        "date_created": "2010-06-07T17:00:00-07:00",
+                        "date_modified": "2010-06-07T17:00:00-07:00",
+                        "name": "University of California-San Diego",
+                        "ein": 956006144
+                    },
+                    "person": "https://www.courtlistener.com/api/rest/v3/people/14155/",
+                    "date_created": "2022-02-23T09:35:40.803943-08:00",
+                    "date_modified": "2022-02-23T09:35:40.803982-08:00",
+                    "degree_level": "ba",
+                    "degree_detail": "",
+                    "degree_year": 1992
+                },
+                {
+                    "resource_uri": "https://www.courtlistener.com/api/rest/v3/educations/7906/",
+                    "id": 7906,
+                    "school": {
+                        "resource_uri": "https://www.courtlistener.com/api/rest/v3/schools/5191/",
+                        "id": 5191,
+                        "is_alias_of": null,
+                        "date_created": "2010-06-07T17:00:00-07:00",
+                        "date_modified": "2010-06-07T17:00:00-07:00",
+                        "name": "University of San Diego",
+                        "ein": 952544535
+                    },
+                    "person": "https://www.courtlistener.com/api/rest/v3/people/14155/",
+                    "date_created": "2022-02-23T09:35:40.814985-08:00",
+                    "date_modified": "2022-02-23T09:35:40.815020-08:00",
+                    "degree_level": "jd",
+                    "degree_detail": "",
+                    "degree_year": 1995
+                }
+            ],
+            "positions": [
+                "https://www.courtlistener.com/api/rest/v3/positions/43836/"
+            ],
+            "political_affiliations": [
+                {
+                    "resource_uri": "https://www.courtlistener.com/api/rest/v3/political-affiliations/5686/",
+                    "id": 5686,
+                    "person": "https://www.courtlistener.com/api/rest/v3/people/14155/",
+                    "date_created": "2022-02-23T09:35:40.822594-08:00",
+                    "date_modified": "2022-02-23T09:35:40.822617-08:00",
+                    "political_party": "d",
+                    "source": "o",
+                    "date_start": null,
+                    "date_granularity_start": "",
+                    "date_end": null,
+                    "date_granularity_end": ""
+                },
+                {
+                    "resource_uri": "https://www.courtlistener.com/api/rest/v3/political-affiliations/5687/",
+                    "id": 5687,
+                    "person": "https://www.courtlistener.com/api/rest/v3/people/14155/",
+                    "date_created": "2022-02-23T09:35:40.831212-08:00",
+                    "date_modified": "2022-02-23T09:35:40.831237-08:00",
+                    "political_party": "d",
+                    "source": "a",
+                    "date_start": null,
+                    "date_granularity_start": "",
+                    "date_end": null,
+                    "date_granularity_end": ""
+                }
+            ],
+            "is_alias_of": null,
+            "date_created": "2021-10-29T17:11:10.174358-07:00",
+            "date_modified": "2022-03-19T11:19:54.556653-07:00",
+            "date_completed": null,
+            "fjc_id": null,
+            "slug": "cynthia-anne-freeland",
+            "name_first": "Cynthia",
+            "name_middle": "Anne",
+            "name_last": "Freeland",
+            "name_suffix": "",
+            "date_dob": null,
+            "date_granularity_dob": "",
+            "date_dod": null,
+            "date_granularity_dod": "",
+            "dob_city": "",
+            "dob_state": "",
+            "dob_country": "United States",
+            "dod_city": "",
+            "dod_state": "",
+            "dod_country": "United States",
+            "gender": "f",
+            "religion": "",
+            "ftm_total_received": null,
+            "ftm_eid": null,
+            "has_photo": false
+        }
+    ]
+}
+
+

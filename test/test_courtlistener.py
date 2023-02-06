@@ -31,8 +31,8 @@ def test_courtsession_construction(mock_courtlistener_api_key):
     )
     assert session_instance.endpoint_base == mock_endpoint
     assert session_instance.api_key == mock_courtlistener_api_key
-    assert session_instance.headers == {}
-    assert session_instance.parameters == {}
+    assert not session_instance.headers
+    assert not session_instance.parameters
     assert isinstance(session_instance, CourtSession)
 
 
@@ -50,8 +50,8 @@ def test_courtsession_and_courtlistener(mock_courtlistener_api_key):
     )
     assert session_instance.endpoint_base == mock_endpoint
     assert session_instance.api_key == mock_courtlistener_api_key
-    assert session_instance.headers == {}
-    assert session_instance.parameters == {}
+    assert not session_instance.headers
+    assert not session_instance.parameters
     assert isinstance(session_instance, CourtSession)
 
     listener_instance = CourtListener(court_session=session_instance)
