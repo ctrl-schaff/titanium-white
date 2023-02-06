@@ -7,7 +7,7 @@ import os
 from loguru import logger
 import requests
 
-from .court_session import CourtSession
+from .courtsession import CourtSession
 
 
 class CourtListener:
@@ -56,7 +56,7 @@ class CourtListener:
             default_authorization = {"Authorization": f"Token {default_api_key}"}
 
             court_session_instance = CourtSession(
-                endpoint_base="https://www.courtlistener.com/",
+                endpoint="https://www.courtlistener.com/api/rest/v3/",
                 api_key=default_api_key,
                 headers=default_authorization,
                 parameters={},
@@ -65,14 +65,25 @@ class CourtListener:
             logger.debug(f"Setting default court session {self.__court_session}")
         return self.__court_session
 
-    def __enter__(self):
+    def get_query(self):
         """
-        Entrypoint for starting courtlistener sessions
+        Prepares the GET request and sends the query to the courtlistener API endpoint,
+        and then processes the response
         """
-        pass
+        session_instance = requests.Session()
+        request_instance = requests.Request(
+            "GET",
+            url=self.court_session.endpoint,
+            data=self.court_session.parameters,
+            headers=self.court_session.parameters,
+        )
 
-    def __exit__(self, exc_type, exc_value, exc_tb):
-        """
-        Exitpoint for terminating courtlistener sessions
-        """
-        pass
+        prepared_request_instance = session_instance.prepare_request(request_instance)
+
+        # Merge environment settings into session
+        settings = session_instance.merge_environment_settings(
+            prepared_request_instance.url, {}, None, None, None
+        )
+        response_instance = session_instance.send(prepared_request_instance, **settings)
+        session_instance.close()
+        return response_instance, prepared_request_instance
