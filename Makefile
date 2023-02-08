@@ -13,10 +13,8 @@ endif
 .RECIPEPREFIX = >
 
 # Directory Structure
-PROJECT_NAME = titanium-white
-REQUIREMENTS = requirements.txt
+PROJECT_NAME = titanium_white
 TEST_DIRECTORY = test
-TOOLS_DIRECTORY = tools
 
 # Virtual Environment
 PY = python3
@@ -25,23 +23,23 @@ BIN = bin
 # Requirements
 REQ_DIR = req
 
-all: install lint test
+all: install lint format test-plan test
 
 .PHONY: install
 install:
-> $(BIN)/pip install -I -r $(REQUIREMENTS)
-
-.PHONY: localbuild
-localbuild:
-> $(PY) setup.py build_ext --inplace 
+> $(BIN)/pip install .
 
 .PHONY: test
 test: 
-> $(PY) -m pytest
+> $(PY) -m pytest ./test
 
-.PHONY: collect_tests
-collect_tests: 
-> $(PY) -m pytest --collect-only
+.PHONY: test-list
+test_list: 
+> $(PY) -m pytest --collect-only ./test
+
+.PHONY: test-plan
+test_plan: 
+> $(PY) -m pytest --setup-plan ./test
 
 .PHONY: lint 
 lint: 
@@ -49,8 +47,11 @@ lint:
 > $(BIN)/flake8 --exit-zero --show-source --statistics --benchmark $(PROJECT_NAME)
 > $(BIN)/pylint --exit-zero --jobs 0 --recursive true $(TEST_DIRECTORY)
 > $(BIN)/flake8 --exit-zero --show-source --statistics --benchmark $(TEST_DIRECTORY)
-> $(BIN)/pylint --exit-zero --jobs 0 --recursive true $(TOOLS_DIRECTORY)
-> $(BIN)/flake8 --exit-zero --show-source --statistics --benchmark $(TOOLS_DIRECTORY)
+
+.PHONY: format 
+format: 
+> $(BIN)/black --workers 4 --verbose --safe --line-length 100 $(PROJECT_NAME)
+> $(BIN)/black --workers 4 --verbose --safe --line-length 100 $(TEST_DIRECTORY)
 
 .PHONY: clean
 clean:
