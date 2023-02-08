@@ -71,11 +71,14 @@ class CourtListener:
         and then processes the response
         """
         session_instance = requests.Session()
+        session_headers = {
+            'Authorization': f'Token: {self.court_session.api_key}'
+        }
         request_instance = requests.Request(
             "GET",
             url=self.court_session.endpoint,
-            data=self.court_session.parameters,
-            headers=self.court_session.parameters,
+            params=self.court_session.parameters,
+            headers=session_headers
         )
 
         prepared_request_instance = session_instance.prepare_request(request_instance)
