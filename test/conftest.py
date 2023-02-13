@@ -11,7 +11,7 @@ from loguru import logger
 import pytest
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def mock_courtlistener_api_key() -> None:
     """
     Sets a mock key value for the courtlistener API key
@@ -45,5 +45,19 @@ def people_endpoint_response() -> dict:
     https://www.courtlistener.com/api/rest/v3/people/?name_first=Cynthia&name_last=Freeland
     """
     endpoint_path = Path("./test/data/test_people_endpoint_response.json").absolute()
+    endpoint_response = load_response(endpoint_path)
+    return endpoint_response
+
+
+@pytest.fixture(scope="session")
+def court_endpoint_response() -> dict:
+    """
+    Fixture for loading example data from specific endpoints
+    from the courtlistener API
+
+    Loads the response produced by hitting the following endpoitn
+    https://www.courtlistener.com/api/rest/v3/court/?full_name=California+Supreme+Court
+    """
+    endpoint_path = Path("./test/data/test_court_endpoint_response.json").absolute()
     endpoint_response = load_response(endpoint_path)
     return endpoint_response

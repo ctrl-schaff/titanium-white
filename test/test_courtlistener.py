@@ -3,57 +3,35 @@ Tests for exercising titanium-white object construction
 for utilizing our exposed API
 """
 
+import os
 from loguru import logger
 import pytest
 
-from titanium_white import CourtListener, CourtSession
+from titanium_white import CourtSession
 
 
-def test_empty_courtlistener_construction():
+def test_courtlistener_empty_construction(mock_courtlistener_api_key):
     """
     Test generating and using a CourtListener instance with no arguments
     """
-    listener_instance = CourtListener()
-    logger.info(listener_instance)
-
-
-def test_courtsession_construction(mock_courtlistener_api_key):
-    """
-    Test generating and using a CourtSession instance
-    """
-    mock_endpoint = "https://courtlistener.fake/api/rest/v3/mock"
-    session_instance = CourtSession(
-        endpoint=mock_endpoint,
-        api_key=mock_courtlistener_api_key,
-        headers={},
-        parameters={},
-    )
+    session_instance = CourtSession()
     logger.info(session_instance)
-    assert session_instance.endpoint == mock_endpoint
-    assert session_instance.api_key == mock_courtlistener_api_key
-    assert not session_instance.headers
-    assert not session_instance.parameters
-    assert isinstance(session_instance, CourtSession)
+
+    assert session_instance.api_key == os.environ["COURTLISTENER"]
+
+    os.environ.pop("COURTLISTENER", None)
+
+    with pytest.raises(KeyError):
+        session_instance = CourtSession()
+        logger.info(session_instance)
 
 
-def test_courtsession_and_courtlistener(mock_courtlistener_api_key):
+def test_courtsession_construction():
     """
-    Test generating and using a CourtListener instance constructed
-    from a CourtSession
+    Test generating a CourtSession instance using an API key directly
     """
-    mock_endpoint = "https://courtlistener.fake/api/rest/v3/mock"
-    session_instance = CourtSession(
-        endpoint=mock_endpoint,
-        api_key=mock_courtlistener_api_key,
-        headers={},
-        parameters={},
-    )
-    logger.info(session_instance)
-    assert session_instance.endpoint == mock_endpoint
-    assert session_instance.api_key == mock_courtlistener_api_key
-    assert not session_instance.headers
-    assert not session_instance.parameters
-    assert isinstance(session_instance, CourtSession)
+    os.environ.pop("COURTLISTENER", None)
+    mock_api_key = "MOCK_API_KEY"
+    session_instance = CourtSession(mock_api_key)
 
-    listener_instance = CourtListener(court_session=session_instance)
-    assert listener_instance.court_session == session_instance
+    assert mock_api_key == session_instance.api_key
