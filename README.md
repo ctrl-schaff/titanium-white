@@ -20,38 +20,38 @@ In order to interface with the API you'll have to provide an API token from cour
 you've generated your token you can construct a `CourtSession` instance to provide relevant
 information for targetting a courtlistener endpoint
 
+###### Case 1 No Context Management
 ```
 from titanium_white import CourtSession
 
-mock_endpoint = "https://courtlistener.com/api/rest/v3/mock"
 mock_api_key = "MOCK_API_KEY"
-session_instance = CourtSession(
-    endpoint=mock_endpoint,
-    api_key=mock_api_key,
-    headers={},
-    parameters={},
-)
-```
+session_obj = CourtSession(api_key=mock_api_key)
 
-With our `session_instance` we can use this to construct our `CourtListener` object and send a query
-to the endpoint specified by `session_instance`
-
-```
-from titanium_white import CourtListener
-
-listener_instance = CourtListener(court_session=session_instance)
-query_response, query_request = listener_instance.get_query()
+mock_endpoint = "https://courtlistener.com/api/rest/v3/mock"
+response = session_obj.get_query(endpoint=mock_endpoint,
+                                 headers={},
+                                 parameters={})
+...
 ```
 
 `get_query` will return both the response from the endpoint along with the prepared request object
 for more in-depth inspection
 
 
+###### Case 2 Internal Context Management
+```
+from titanium_white import CourtSession
 
+mock_api_key = "MOCK_API_KEY"
+session_obj = CourtSession(api_key=mock_api_key)
 
+endpoint_base = "https://courtlistener.com/api/rest/v3/"
+endpoints = ["mock1", "mock2", "mock3"]
 
-
-
-
-
-
+with CourtSession(api_key=mock_api_key) as session_obj:
+    for endpoint in endpoints:
+        full_endpoint = f"{endpoint_base}{endpoint}"
+        response = session_obj.get_query(endpoint=full_endpoint,
+                                         headers={},
+                                         parameters={})
+```
