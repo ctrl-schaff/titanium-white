@@ -2,10 +2,12 @@
 Collection of classes for implementating the wrapper around
 the courtlistener API
 """
-import os
-
+import json
+import math
 from loguru import logger
 import requests
+
+from .authorization import load_api_key
 
 
 class CourtSession:
@@ -21,35 +23,9 @@ class CourtSession:
 
     def __init__(self, api_key: str = None):
         if api_key is None:
-            api_key = self.__load_api_key("COURTLISTENER")
+            api_key = load_api_key("COURTLISTENER")
         self.api_key = api_key
         self.http_session = requests.Session()
-
-    @classmethod
-    def __load_api_key(cls, courtlistener_env: str = None) -> str:
-        """
-        Attempts to load the api key from the environment variable
-        specified as the "courtlistener_env" argument. If no argument
-        is provided then we default to searching for the environment
-        variable "COURTLISTENER"
-        """
-        if courtlistener_env is None:
-            courtlistener_env = "COURTLISTENER"
-
-        try:
-            api_key = os.environ[courtlistener_env]
-        except KeyError as key_err:
-            logger.exception(key_err)
-            env_error_msg = (
-                "Missing COURTLISTENER API token\n"
-                "Either set the environment variable or pass"
-                "to the <api_key_instance> constructor argument"
-            )
-            logger.error(env_error_msg)
-            raise key_err
-        else:
-            logger.debug((f"Discovered api key " f"[{courtlistener_env}]={api_key}"))
-        return api_key
 
     def __enter__(self):
         """
@@ -108,6 +84,56 @@ class CourtSession:
         )
         response_instance = self.http_session.send(prepared_request_instance, **settings)
         return response_instance, prepared_request_instance
+
+    def get_query_depth(self, **kwargs):
+        """
+        Prepares the GET request and sends the query to the courtlistener API endpoint,
+        and then processes the response
+
+        Also adds an additional page_depth input which enables for further searching through the
+        results of an endpoint
+
+        Supports the same input arguments as the requests.Request method except the method
+        parameter, as this one is hard-coded for HTTP "GET"
+        |  :param url: URL to send.
+        |  :param headers: dictionary of headers to send.
+        |  :param files: dictionary of {filename: fileobject} files to multipart upload.
+        |  :param data: the body to attach to the request. If a dictionary or
+        |      list of tuples ``[(key, value)]`` is provided, form-encoding will
+        |      take place.
+        |  :param json: json for the body to attach to the request
+        |               (if files or data is not specified).
+        |  :param params: URL parameters to append to the URL. If a dictionary or
+        |      list of tuples ``[(key, value)]`` is provided, form-encoding will
+        |      take place.
+        |  :param auth: Auth handler or (user, pass) tuple.
+        |  :param cookies: dictionary or CookieJar of cookies to attach to this request.
+        |  :param hooks: dictionary of callback hooks, for internal usage.
+        """
+        page_depth = kwargs.pop("page_depth", 10)
+        query_results = {"count": 0}
+        logger.debug(f"Querying CourtListener:\n{json.dumps(kwargs, indent=4)}")
+        initial_response, __ = self.get_query(**kwargs)
+        json_body = initial_response.json()
+        query_results["count"] = json_body.get("count", 0)
+        num_query_pages = math.ceil(query_results["count"] / 20)
+        page_depth = min(page_depth, num_query_pages)
+
+        query_url = initial_response.url
+        logger.info(f"GET {query_url}")
+        query_results[query_url] = json_body.get("results", None)
+
+        for page_index in range(2, page_depth + 1):
+            kwargs["params"].update({"page": page_index})
+            logger.info(f"GET {kwargs.get('url', None)}")
+            query_response, __ = self.get_query(**kwargs)
+
+            query_results[query_response.url] = query_response.json()
+            query_url = initial_response.url
+            logger.info(f"GET {query_url}")
+            query_results[query_url] = json_body.get("results", None)
+
+        return query_results
 
     def __inject_authorization(self, query_args: dict) -> dict:
         """

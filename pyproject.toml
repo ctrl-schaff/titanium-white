@@ -10,7 +10,7 @@ namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
 [project]
 name = "titanium-white"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="Johnathan Schaff", email="schaffjohnathan@gmail.com" },
 ]
@@ -24,6 +24,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
+    "aiohttp",
     "flake8>=4.0.1",
     "loguru>=0.6.0",
     "pylint>=2.15.10",
